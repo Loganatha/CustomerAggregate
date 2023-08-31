@@ -124,9 +124,13 @@
             }
         });
 
-        function addWebsiteToList(url) {
+       function addWebsiteToList(url) {
             const listItem = document.createElement("li");
-            listItem.textContent = url;
+            const link = document.createElement("a");
+            link.href = url;
+            link.target = "_blank"; // Open link in a new tab
+            link.textContent = url;
+            listItem.appendChild(link);
             customerList.appendChild(listItem);
         }
 
