@@ -56,14 +56,19 @@
 </head>
     
 <body>
-    <h1>Freight Broker Website</h1>
-
-    <div>
-        <input id="searchInput" type="text" placeholder="Enter search query">
-        <button id="searchButton">Search</button>
-    </div>
-
-   <script>
+    <h1>Logan's Customer List</h1>
+    
+    <label for="sortSelect">Sort by:</label>
+    <select id="sortSelect">
+        <option value="default">Default</option>
+        <option value="name">Company Name</option>
+    </select>
+    
+    <ul id="customerList">
+        <!-- List items will be added here -->
+    </ul>
+    
+    <script>
         const websiteInput = document.getElementById("websiteInput");
         const customerList = document.getElementById("customerList");
         const addButton = document.getElementById("addButton");
@@ -72,11 +77,9 @@
     
         // Load stored URLs from local storage when page loads
         const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
-    
         storedURLs.forEach(url => {
             addWebsiteToList(url);
         });
-    
         addButton.addEventListener("click", function() {
             const enteredURL = websiteInput.value.trim();
             if (enteredURL !== "") {
@@ -84,20 +87,12 @@
                 websiteInput.value = ""; // Clear the input field
             }
         });
-    
         saveButton.addEventListener("click", function() {
             const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
             localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
         });
-    
-        sortSelect.addEventListener("change", function() {
-            if (sortSelect.value === "name") {
-                sortByName();
-            }
-            // Add more sorting options as needed
-            // Implement AI sorting options here
-        });
-    
+
+            
         function addWebsiteToList(url) {
             const listItem = document.createElement("li");
             const link = document.createElement("a");
@@ -118,7 +113,14 @@
                 customerList.appendChild(item);
             });
         }
-    
+            
+        //sortSelect.addEventListener("change", function() {
+        //        if (sortSelect.value === "name") {
+        //            sortByName();
+        //        }
+                // Add more sorting options as needed
+                // Implement AI sorting options here
+        });
         // Implement more sorting functions here
     
     </script>
