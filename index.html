@@ -72,6 +72,7 @@
         storedURLs.forEach(url => {
             addWebsiteToList(url);
         });
+        
         addButton.addEventListener("click", function() {
             const enteredURL = websiteInput.value.trim();
             if (enteredURL !== "") {
@@ -82,6 +83,12 @@
         saveButton.addEventListener("click", function() {
             const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
             localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
+        });
+         
+        sortSelect.addEventListener("change", function() {
+            if (sortSelect.value === "name") {
+            sortByName();
+        }
         });
         
         websiteInput.addEventListener("keyup", function(event) {
@@ -104,11 +111,6 @@
             customerList.appendChild(listItem);
         }
         
-         sortSelect.addEventListener("change", function() {
-            if (sortSelect.value === "name") {
-            sortByName();
-        }
-        });
         function sortByName() {
             const listItems = Array.from(customerList.children);
             listItems.sort((a, b) => {
