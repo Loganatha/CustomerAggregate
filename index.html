@@ -61,6 +61,26 @@
     </ul>
 
     <script>
+        
+        const websiteInput = document.getElementById("websiteInput");
+        const customerList = document.getElementById("customerList");
+
+        websiteInput.addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                const enteredURL = websiteInput.value.trim();
+                if (enteredURL !== "") {
+                    addWebsiteToList(enteredURL); // Add the entered URL to the list
+                    websiteInput.value = ""; // Clear the input field
+                }
+            }
+        });
+
+        function addWebsiteToList(url) {
+            const listItem = document.createElement("li");
+            listItem.textContent = url;
+            customerList.appendChild(listItem);
+        }
+        
         const customers = [
             { name: "Company A", email: "info@companya.com", commodity: "Electronics" },
             // More customer data
