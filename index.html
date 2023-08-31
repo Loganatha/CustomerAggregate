@@ -113,8 +113,31 @@
         const websiteInput = document.getElementById("websiteInput");
         const customerList = document.getElementById("customerList");
         const sortSelect = document.getElementById("sortSelect");
+        const addButton = document.getElementById("addButton");
+        const saveButton = document.getElementById("saveButton");
+        
+        const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
 
-        websiteInput.addEventListener("keyup", function(event) {
+        storedURLs.forEach(url => {
+            addWebsiteToList(url);
+        });
+        
+        addButton.addEventListener("click", function() {
+            const enteredURL = websiteInput.value.trim();
+            if (enteredURL !== "") {
+                addWebsiteToList(enteredURL); // Add the entered URL to the list
+                websiteInput.value = ""; // Clear the input field
+            }
+        });
+        
+        saveButton.addEventListener("click", function() {
+            const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
+            localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
+        });
+
+
+        
+         websiteInput.addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
                 const enteredURL = websiteInput.value.trim();
                 if (enteredURL !== "") {
@@ -123,8 +146,8 @@
                 }
             }
         });
-
-       function addWebsiteToList(url) {
+        
+        function addWebsiteToList(url) {
             const listItem = document.createElement("li");
             const link = document.createElement("a");
             link.href = url;
