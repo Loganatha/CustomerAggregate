@@ -3,41 +3,19 @@
 <head>
     <title>Freight Broker</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f7f7;
+        /* Your CSS styles here */
+
+        /* Additional CSS for new elements */
+        .contact-date {
+            font-size: 12px;
+            color: #888;
         }
 
-        h1 {
-            text-align: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-            margin: 0;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 20px;
-        }
-
-        li {
-            background-color: #fff;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        select {
+        .website-input {
             margin: 10px;
             padding: 5px;
+            width: 100%;
         }
-
-        /* Add more CSS rules as needed */
     </style>
 </head>
 <body>
@@ -48,22 +26,18 @@
         <option value="default">Default</option>
         <option value="name">Company Name</option>
     </select>
-    
-    <!-- Input fields for website URLs -->
-    <input class="website-input" type="text" placeholder="Enter website URL">
 
-    <ul id="customerList">
-        <!-- List items will be added here -->
-    </ul>
-    
+    <!-- Input fields for website URLs -->
+    <input id="websiteInput" class="website-input" type="text" placeholder="Enter website URL">
+
     <ul id="customerList">
         <!-- List items will be added here -->
     </ul>
 
     <script>
-        
         const websiteInput = document.getElementById("websiteInput");
         const customerList = document.getElementById("customerList");
+        const sortSelect = document.getElementById("sortSelect");
 
         websiteInput.addEventListener("keyup", function(event) {
             if (event.key === "Enter") {
@@ -80,42 +54,23 @@
             listItem.textContent = url;
             customerList.appendChild(listItem);
         }
-        
-        const customers = [
-            { name: "Company A", email: "info@companya.com", commodity: "Electronics" },
-            // More customer data
-        ];
 
-        const customerList = document.getElementById("customerList");
-        const sortSelect = document.getElementById("sortSelect");
-
-        // Function to render customer list
-        function renderCustomerList(list) {
-            customerList.innerHTML = "";
-
-            list.forEach(customer => {
-                const listItem = document.createElement("li");
-                listItem.textContent = `${customer.name} | ${customer.email} | ${customer.commodity}`;
-                customerList.appendChild(listItem);
-            });
-        }
-
-        // Function to sort customers by name
-        function sortByName() {
-            const sortedList = [...customers].sort((a, b) => a.name.localeCompare(b.name));
-            renderCustomerList(sortedList);
-        }
-
-        // Event listener for sorting selection
-        sortSelect.addEventListener("change", () => {
+        sortSelect.addEventListener("change", function() {
             if (sortSelect.value === "name") {
                 sortByName();
             }
-            // Implement more sorting options if needed
         });
 
-        // Initial render
-        renderCustomerList(customers);
+        function sortByName() {
+            const listItems = Array.from(customerList.children);
+            listItems.sort((a, b) => {
+                return a.textContent.localeCompare(b.textContent);
+            });
+            customerList.innerHTML = "";
+            listItems.forEach(item => {
+                customerList.appendChild(item);
+            });
+        }
     </script>
 </body>
 </html>
