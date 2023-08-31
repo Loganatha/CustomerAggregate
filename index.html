@@ -63,71 +63,62 @@
         <button id="searchButton">Search</button>
     </div>
 
-    <script>
-        const websiteInput = document.getElementById("websiteInput");
-        const customerList = document.getElementById("customerList");
-        const addButton = document.getElementById("addButton");
-        const saveButton = document.getElementById("saveButton");
-        const googleSearchButton = document.getElementById("googleSearchButton");
-        const sortSelect = document.getElementById("sortSelect");
-    
-        // Load stored URLs from local storage when page loads
-        const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
-    
-        storedURLs.forEach(url => {
-            addWebsiteToList(url);
-        });
-    
-        addButton.addEventListener("click", function() {
-            const enteredURL = websiteInput.value.trim();
-            if (enteredURL !== "") {
-                addWebsiteToList(enteredURL); // Add the entered URL to the list
-                websiteInput.value = ""; // Clear the input field
-            }
-        });
-    
-        saveButton.addEventListener("click", function() {
-            const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
-            localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
-        });
-    
-        googleSearchButton.addEventListener("click", function() {
-            // Add Google search logic here
-            // Use the entered query to perform a search
-            // Display the search results as required
-        });
-    
-        sortSelect.addEventListener("change", function() {
-            if (sortSelect.value === "name") {
-                sortByName();
-            }
-            // Add more sorting options as needed
-            // Implement AI sorting options here
-        });
-    
-        function addWebsiteToList(url) {
-            const listItem = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = url;
-            link.target = "_blank"; // Open link in a new tab
-            link.textContent = url;
-            listItem.appendChild(link);
-            customerList.appendChild(listItem);
-        }
-    
-        function sortByName() {
-            const listItems = Array.from(customerList.children);
-            listItems.sort((a, b) => {
-                return a.textContent.localeCompare(b.textContent);
-            });
-            customerList.innerHTML = "";
-            listItems.forEach(item => {
-                customerList.appendChild(item);
-            });
-        }
-    
-        // Implement more sorting functions here
+   <script>
+    const websiteInput = document.getElementById("websiteInput");
+    const customerList = document.getElementById("customerList");
+    const addButton = document.getElementById("addButton");
+    const saveButton = document.getElementById("saveButton");
+    const sortSelect = document.getElementById("sortSelect");
 
-    </script>
-</body>
-</html>
+    // Load stored URLs from local storage when page loads
+    const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
+
+    storedURLs.forEach(url => {
+        addWebsiteToList(url);
+    });
+
+    addButton.addEventListener("click", function() {
+        const enteredURL = websiteInput.value.trim();
+        if (enteredURL !== "") {
+            addWebsiteToList(enteredURL); // Add the entered URL to the list
+            websiteInput.value = ""; // Clear the input field
+        }
+    });
+
+    saveButton.addEventListener("click", function() {
+        const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
+        localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
+    });
+
+    sortSelect.addEventListener("change", function() {
+        if (sortSelect.value === "name") {
+            sortByName();
+        }
+        // Add more sorting options as needed
+        // Implement AI sorting options here
+    });
+
+    function addWebsiteToList(url) {
+        const listItem = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = url;
+        link.target = "_blank"; // Open link in a new tab
+        link.textContent = url;
+        listItem.appendChild(link);
+        customerList.appendChild(listItem);
+    }
+
+    function sortByName() {
+        const listItems = Array.from(customerList.children);
+        listItems.sort((a, b) => {
+            return a.textContent.localeCompare(b.textContent);
+        });
+        customerList.innerHTML = "";
+        listItems.forEach(item => {
+            customerList.appendChild(item);
+        });
+    }
+
+    // Implement more sorting functions here
+
+</script>
