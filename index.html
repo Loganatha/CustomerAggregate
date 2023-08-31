@@ -10,7 +10,6 @@
             padding: 0;
             background-color: #f7f7f7;
         }
-
         h1 {
             text-align: center;
             padding: 20px;
@@ -18,13 +17,11 @@
             color: white;
             margin: 0;
         }
-
         ul {
             list-style: none;
             padding: 0;
             margin: 20px;
         }
-
         li {
             background-color: #fff;
             padding: 10px;
@@ -50,7 +47,6 @@
             font-size: 12px;
             color: #888;
         }
-
         .website-input {
             margin: 10px;
             padding: 5px;
@@ -58,6 +54,7 @@
         }
     </style>
 </head>
+    
 <body>
     <h1>Freight Broker Website</h1>
 
@@ -67,61 +64,20 @@
     </div>
 
     <script>
-        const searchButton = document.getElementById("searchButton");
-        const searchInput = document.getElementById("searchInput");
-
-        searchButton.addEventListener("click", async function() {
-            const query = searchInput.value;
-            if (query) {
-                const apiKey = "YOUR_GOOGLE_API_KEY";
-                const searchUrl = `https://www.googleapis.com/customsearch/v1?q=${query}&key=${apiKey}&cx=YOUR_CUSTOM_SEARCH_ENGINE_ID`;
-
-                try {
-                    const response = await fetch(searchUrl);
-                    const data = await response.json();
-                    
-                    const searchResults = data.items || [];
-                    const top5Results = searchResults.slice(0, 5);
-                    
-                    const popupContent = top5Results.map(result => {
-                        return `<a href="${result.link}" target="_blank">${result.title}</a>`;
-                    }).join("<br>");
-                    
-                    // Display the results in a pop-up or another UI element
-                    alert(popupContent);
-                } catch (error) {
-                    console.error("Error fetching search results:", error);
-                }
-            }
-        });
-    </script>
-
-    <label for="sortSelect">Sort by:</label>
-    <select id="sortSelect">
-        <option value="default">Default</option>
-        <option value="name">Company Name</option>
-    </select>
-
-    <!-- Input fields for website URLs -->
-    <input id="websiteInput" class="website-input" type="text" placeholder="Enter website URL">
-
-    <ul id="customerList">
-        <!-- List items will be added here -->
-    </ul>
-
-    <script>
         const websiteInput = document.getElementById("websiteInput");
         const customerList = document.getElementById("customerList");
-        const sortSelect = document.getElementById("sortSelect");
         const addButton = document.getElementById("addButton");
         const saveButton = document.getElementById("saveButton");
-        
+        const googleSearchButton = document.getElementById("googleSearchButton");
+        const sortSelect = document.getElementById("sortSelect");
+    
+        // Load stored URLs from local storage when page loads
         const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
-
+    
         storedURLs.forEach(url => {
             addWebsiteToList(url);
         });
-        
+    
         addButton.addEventListener("click", function() {
             const enteredURL = websiteInput.value.trim();
             if (enteredURL !== "") {
@@ -129,24 +85,26 @@
                 websiteInput.value = ""; // Clear the input field
             }
         });
-        
+    
         saveButton.addEventListener("click", function() {
             const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
             localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
         });
-
-
-        
-         websiteInput.addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                const enteredURL = websiteInput.value.trim();
-                if (enteredURL !== "") {
-                    addWebsiteToList(enteredURL); // Add the entered URL to the list
-                    websiteInput.value = ""; // Clear the input field
-                }
-            }
+    
+        googleSearchButton.addEventListener("click", function() {
+            // Add Google search logic here
+            // Use the entered query to perform a search
+            // Display the search results as required
         });
-        
+    
+        sortSelect.addEventListener("change", function() {
+            if (sortSelect.value === "name") {
+                sortByName();
+            }
+            // Add more sorting options as needed
+            // Implement AI sorting options here
+        });
+    
         function addWebsiteToList(url) {
             const listItem = document.createElement("li");
             const link = document.createElement("a");
@@ -156,13 +114,7 @@
             listItem.appendChild(link);
             customerList.appendChild(listItem);
         }
-
-        sortSelect.addEventListener("change", function() {
-            if (sortSelect.value === "name") {
-                sortByName();
-            }
-        });
-
+    
         function sortByName() {
             const listItems = Array.from(customerList.children);
             listItems.sort((a, b) => {
@@ -173,6 +125,9 @@
                 customerList.appendChild(item);
             });
         }
+    
+        // Implement more sorting functions here
+
     </script>
 </body>
 </html>
