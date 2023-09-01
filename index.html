@@ -40,7 +40,6 @@
         .website-input {
             margin: 10px;
             padding: 5px;
-            width: 100%;
         }
     </style>
 </head>
@@ -60,68 +59,69 @@
     </ul>
     
     <script>
-        const websiteInput = document.getElementById("websiteInput");
-        const customerList = document.getElementById("customerList");
-        const sortSelect = document.getElementById("sortSelect");
-        const addButton = document.getElementById("addButton");
-        const saveButton = document.getElementById("saveButton");
+        document.addEventListener("DOMContentLoaded", function() {
+            const websiteInput = document.getElementById("websiteInput");
+            const customerList = document.getElementById("customerList");
+            const sortSelect = document.getElementById("sortSelect");
+            const addButton = document.getElementById("addButton");
+            const saveButton = document.getElementById("saveButton");
+            
         
-    
-        // Load stored URLs from local storage when page loads
-        const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
-        storedURLs.forEach(url => {
-            addWebsiteToList(url);
-        });
-        
-        addButton.addEventListener("click", function() {
-            const enteredURL = websiteInput.value.trim();
-            if (enteredURL !== "") {
-                addWebsiteToList(enteredURL); // Add the entered URL to the list
-                websiteInput.value = ""; // Clear the input field
-            }
-        });
-        saveButton.addEventListener("click", function() {
-            const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
-            localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
-        });
-         
-        sortSelect.addEventListener("change", function() {
-            if (sortSelect.value === "name") {
-            sortByName();
-        }
-        });
-        
-        websiteInput.addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
+            // Load stored URLs from local storage when page loads
+            const storedURLs = JSON.parse(localStorage.getItem("websiteURLs")) || [];
+            storedURLs.forEach(url => {
+                addWebsiteToList(url);
+            });
+            
+            addButton.addEventListener("click", function() {
                 const enteredURL = websiteInput.value.trim();
                 if (enteredURL !== "") {
                     addWebsiteToList(enteredURL); // Add the entered URL to the list
                     websiteInput.value = ""; // Clear the input field
                 }
+            });
+            saveButton.addEventListener("click", function() {
+                const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
+                localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
+            });
+             
+            sortSelect.addEventListener("change", function() {
+                if (sortSelect.value === "name") {
+                    sortByName();
             }
-        });
-       
-        function addWebsiteToList(url) {
-            const listItem = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = url;
-            link.target = "_blank"; // Open link in a new tab
-            link.textContent = url;
-            listItem.appendChild(link);
-            customerList.appendChild(listItem);
-        }
-        
-        function sortByName() {
-            const listItems = Array.from(customerList.children);
-            listItems.sort((a, b) => {
-                return a.textContent.localeCompare(b.textContent);
             });
-            customerList.innerHTML = "";
-            listItems.forEach(item => {
-                customerList.appendChild(item);
+            
+            websiteInput.addEventListener("keyup", function(event) {
+                if (event.key === "Enter") {
+                    const enteredURL = websiteInput.value.trim();
+                    if (enteredURL !== "") {
+                        addWebsiteToList(enteredURL); // Add the entered URL to the list
+                        websiteInput.value = ""; // Clear the input field
+                    }
+                }
             });
+           
+            function addWebsiteToList(url) {
+                const listItem = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = url;
+                link.target = "_blank"; // Open link in a new tab
+                link.textContent = url;
+                listItem.appendChild(link);
+                customerList.appendChild(listItem);
+            }
+            
+            function sortByName() {
+                const listItems = Array.from(customerList.children);
+                listItems.sort((a, b) => {
+                    return a.textContent.localeCompare(b.textContent);
+                });
+                customerList.innerHTML = "";
+                listItems.forEach(item => {
+                    customerList.appendChild(item);
+                });
+            }
         }
-        
             // Add more sorting options as needed
             // Implement AI sorting options here
 
