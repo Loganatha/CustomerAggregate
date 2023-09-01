@@ -57,6 +57,10 @@
     <ul id="customerList">
         <!-- List items will be added here -->
     </ul>
+
+    <button id="saveButton>Save</button>
+
+    <button id="addButton>Add</button>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -73,13 +77,7 @@
                 addWebsiteToList(url);
             });
             
-            addButton.addEventListener("click", function() {
-                const enteredURL = websiteInput.value.trim();
-                if (enteredURL !== "") {
-                    addWebsiteToList(enteredURL); // Add the entered URL to the list
-                    websiteInput.value = ""; // Clear the input field
-                }
-            });
+           
             saveButton.addEventListener("click", function() {
                 const urlsToSave = Array.from(customerList.children).map(item => item.textContent);
                 localStorage.setItem("websiteURLs", JSON.stringify(urlsToSave));
@@ -88,9 +86,16 @@
             sortSelect.addEventListener("change", function() {
                 if (sortSelect.value === "name") {
                     sortByName();
-            }
+                }
             });
             
+             addButton.addEventListener("click", function() {
+                const enteredURL = websiteInput.value.trim();
+                if (enteredURL !== "") {
+                    addWebsiteToList(enteredURL); // Add the entered URL to the list
+                    websiteInput.value = ""; // Clear the input field
+                }
+            });
             websiteInput.addEventListener("keyup", function(event) {
                 if (event.key === "Enter") {
                     const enteredURL = websiteInput.value.trim();
